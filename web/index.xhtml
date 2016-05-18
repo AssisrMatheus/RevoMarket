@@ -1,0 +1,149 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    template="/Shared/_template.xhtml">
+
+    <ui:define name = "top">
+        <div>
+            <div class="ui large top fixed hidden menu">
+                <div class="ui container">
+
+                    <a class="active item">Home</a>
+
+                    <a class="item">Work</a>
+
+                    <a class="item">Company</a>
+
+                    <a class="item">Careers</a>
+
+
+                    <div class="right menu">
+                        <div class="item">
+                            <div href="#cadastroLogin" data-event='scroll' class="ui button">Login</div>
+                        </div>
+                        <div class="item">
+                            <div href="#cadastroLogin" data-event='scroll' class="ui primary button">Cadastrar</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+
+    <ui:define name = "content">
+
+        <header class="image-header">
+            <div class="ui inverted vertical masthead center aligned segment">
+
+                <div class="ui container">
+                    <div class="ui large secondary inverted pointing menu">
+                        <a class="toc item">
+                            <i class="sidebar icon"></i>
+                        </a>
+                        <a class="active item">Home</a>
+                        <a class="item">Work</a>
+                        <a class="item">Company</a>
+                        <a class="item">Careers</a>
+                        <div class="right item">
+                            <div href="#cadastroLogin" data-event='scroll' class="ui inverted button">Login</div>
+                            <div href="#cadastroLogin" data-event='scroll' class="ui inverted button">Cadastrar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="topHeaderContainer" style="display:none;" class="ui text container">
+                    <h1 class="ui inverted header">
+                        Revo.Market-
+                    </h1>
+                    <h2>A revolução do mercado de ações</h2>
+                    <div href="#cadastroLogin" data-event='scroll' class="ui labeled button" tabindex="0">
+
+                        <div class="ui huge huge green button animated">
+
+                            <div class="visible content">Participar</div>
+                            <div class="hidden content">
+                                <i class="right dollar icon"></i>
+                            </div>
+
+                        </div>
+                        <div class="ui basic left pointing label">
+                            9999 
+                            <i style="margin-left: .75em;" class="right users icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    $(document)
+                            .ready(function () {
+                                $('#topHeaderContainer').transition({
+                                    animation: 'fade up',
+                                    duration: 2300
+                                });
+                            });
+
+                </script>
+
+            </div>
+        </header>
+
+        <div id="cadastroLogin" class="ui vertical stripe segment">
+            <div class="ui two column middle aligned very relaxed stackable grid container">
+                <div class="column">
+
+                    <!--                    LoginFORM-->
+                    <h:form>
+                        <div class="ui form">
+                            <div class="field">
+                                <label>Usuário</label>
+                                <div class="ui left icon input">
+                                    <h:inputText a:placeholder="Usuário" value="#{index.usuario.login}"/>
+                                    <i class="user icon"></i>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Senha</label>
+                                <div class="ui left icon input">
+                                    <h:inputSecret a:placeholder="Senha" value="#{index.usuario.senha}" />
+                                    <i class="lock icon"></i>
+                                </div>
+                            </div>
+                            <h:commandLink action="#{index.actionLoginUsuario()}" class="ui blue submit button">Login</h:commandLink>
+                        </div>
+                    </h:form>
+
+                </div>
+                <div class="ui vertical divider">
+                    Ou
+                </div>
+                <div class="center aligned column">
+                    <h:form>
+                        <h:commandLink action="#{index.pageCadastrarUsuario()}" class="ui big green labeled icon button">
+                            <i class="signup icon"></i>
+                            Cadastrar
+                        </h:commandLink>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui vertical stripe segment">
+            <div class="ui text container">
+                <h3 class="ui header">Confira em tempo real</h3>
+                <p>Veja em tempo real como está o mercado e cadastre-se para participar</p>
+
+                TABELA DO MERCADO AQUI
+
+                <br></br>
+
+                <a class="ui green button">Entrar</a>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>
+

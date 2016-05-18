@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <!-- Javascripts -->
+        <h:outputScript name="./js/jquery-2.2.3.js"/>
+        <h:outputScript name="./semantic.min.js"/>
+        <h:outputScript name="./js/system.js"/>
+        
+        <!-- Styles -->
+        <h:outputStylesheet name="./semantic.css"/>
+        <h:outputStylesheet name="./css/style.css"/>
+        
+        <title>Revo.Market- | A revolução no mercado de ações</title>
+        
+        <script>
+  $(document)
+    .ready(function() {
+
+      // fix menu when passed
+      $('.masthead')
+        .visibility({
+          once: false,
+          onBottomPassed: function() {
+            $('.fixed.menu').transition('fade in');
+          },
+          onBottomPassedReverse: function() {
+            $('.fixed.menu').transition('fade out');
+          }
+        })
+      ;
+
+      // create sidebar and attach to menu open
+      $('.ui.sidebar')
+        .sidebar('attach events', '.toc.item')
+      ;
+
+    })
+  ;
+  </script>
+    </h:head>
+
+    <h:body>
+        <div id="top" class="top">
+            <ui:insert name="top">
+           
+            <!-- Top -->
+            <ui:include src="./top.xhtml"></ui:include>    
+                
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+            <!-- Content -->
+            <ui:include src="./content.xhtml"></ui:include> 
+            
+            </ui:insert>
+        </div>
+        
+        <div id="footer" class="footer_content">
+            <ui:insert name="footer">
+            
+            <!-- Footer-->
+            <ui:include src="./footer.xhtml"></ui:include>
+            
+            </ui:insert>
+        </div>
+
+        
+    </h:body>
+
+</html>
