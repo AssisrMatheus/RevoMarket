@@ -5,13 +5,54 @@
  */
 package Model.User;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 /**
  *
  * @author adowt
  */
+@Entity
 public class Usuario {
+    @Id
+    @GeneratedValue
+    private int Id;
+    
     private String Login, Senha;
-    private boolean isAdmin;
+    
+    private boolean IsAdmin;
+    
+    @OneToOne
+    private Pessoa Pessoa;
+
+    public Usuario() {
+        this.Pessoa = new Pessoa();
+    }
+
+    public Usuario(int Id, String Login, String Senha, boolean IsAdmin, Pessoa Pessoa) {
+        this.Id = Id;
+        this.Login = Login;
+        this.Senha = Senha;
+        this.IsAdmin = IsAdmin;
+        this.Pessoa = Pessoa;
+    }
+    
+    public Usuario(String Login, String Senha, boolean IsAdmin, Pessoa Pessoa) {
+        this.Login = Login;
+        this.Senha = Senha;
+        this.IsAdmin = IsAdmin;
+        this.Pessoa = Pessoa;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
 
     public String getLogin() {
         return Login;
@@ -30,12 +71,21 @@ public class Usuario {
     }
 
     public boolean isIsAdmin() {
-        return isAdmin;
+        return IsAdmin;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setIsAdmin(boolean IsAdmin) {
+        this.IsAdmin = IsAdmin;
     }
+
+    public Pessoa getPessoa() {
+        return Pessoa;
+    }
+
+    public void setPessoa(Pessoa Pessoa) {
+        this.Pessoa = Pessoa;
+    }
+
     
     
 }

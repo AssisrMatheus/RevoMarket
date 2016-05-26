@@ -5,28 +5,39 @@
  */
 package Model.User;
 
+import Model.Cotacao.Conta;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 /**
  *
  * @author adowt
  */
-public class Pessoa extends Usuario {
+@Entity
+public class Pessoa {
+    @Id
+    @GeneratedValue
+    private int Id;
+    
     private String Nome, Profissao, Endereco, Cidade, Estado;
     private int Cpf, Rg;
-
-    public Pessoa(String Nome, String Profissao, String Endereco, String Cidade, String Estado, int Cpf, int Rg) {
-        this.Nome = Nome;
-        this.Profissao = Profissao;
-        this.Endereco = Endereco;
-        this.Cidade = Cidade;
-        this.Estado = Estado;
-        this.Cpf = Cpf;
-        this.Rg = Rg;
-    }
+    
+    @OneToOne
+    private Conta Conta;
 
     public Pessoa() {
+        this.Conta = new Conta(500);
     }
-    
-    
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
 
     public String getNome() {
         return Nome;
@@ -84,8 +95,14 @@ public class Pessoa extends Usuario {
         this.Rg = Rg;
     }
 
+    public Conta getConta() {
+        return Conta;
+    }
+
+    public void setConta(Conta Conta) {
+        this.Conta = Conta;
+    }
+
     
-    
-    
-    
+      
 }

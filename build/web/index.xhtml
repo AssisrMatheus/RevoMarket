@@ -3,20 +3,15 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-    template="/Shared/_template.xhtml">
+    template="/Shared/_template.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name = "top">
         <div>
             <div class="ui large top fixed hidden menu">
                 <div class="ui container">
 
-                    <a class="active item">Home</a>
-
-                    <a class="item">Work</a>
-
-                    <a class="item">Company</a>
-
-                    <a class="item">Careers</a>
+                    <ui:include src="Shared/menu.xhtml"></ui:include>
 
 
                     <div class="right menu">
@@ -44,10 +39,9 @@
                         <a class="toc item">
                             <i class="sidebar icon"></i>
                         </a>
-                        <a class="active item">Home</a>
-                        <a class="item">Work</a>
-                        <a class="item">Company</a>
-                        <a class="item">Careers</a>
+
+                        <ui:include src="Shared/menu.xhtml"></ui:include>
+
                         <div class="right item">
                             <div href="#cadastroLogin" data-event='scroll' class="ui inverted button">Login</div>
                             <div href="#cadastroLogin" data-event='scroll' class="ui inverted button">Cadastrar</div>
@@ -61,7 +55,6 @@
                     </h1>
                     <h2>A revolução do mercado de ações</h2>
                     <div href="#cadastroLogin" data-event='scroll' class="ui labeled button" tabindex="0">
-
                         <div class="ui huge huge green button animated">
 
                             <div class="visible content">Participar</div>
@@ -71,7 +64,7 @@
 
                         </div>
                         <div class="ui basic left pointing label">
-                            9999 
+                            #{index.quantidadeUsuarios}
                             <i style="margin-left: .75em;" class="right users icon"></i>
                         </div>
                     </div>
@@ -97,7 +90,7 @@
 
                     <!--                    LoginFORM-->
                     <h:form>
-                        <div class="ui form">
+                        <div class="ui form error">
                             <div class="field">
                                 <label>Usuário</label>
                                 <div class="ui left icon input">
@@ -112,6 +105,18 @@
                                     <i class="lock icon"></i>
                                 </div>
                             </div>
+
+                            <h:panelGroup rendered="#{systemMB.validacao ne null}">
+                                <div class="ui error message">
+                                    <div class="header">Verificar o login</div>
+                                    <ui:repeat value="#{systemMB.validacao}" var="valResult">
+                                        <ui:repeat value="#{valResult.errorMessages}" var="errors">
+                                            <p>a</p>
+                                        </ui:repeat>
+                                    </ui:repeat>
+                                </div>
+                            </h:panelGroup>
+
                             <h:commandLink action="#{index.actionLoginUsuario()}" class="ui blue submit button">Login</h:commandLink>
                         </div>
                     </h:form>
@@ -140,7 +145,7 @@
 
                 <br></br>
 
-                <a class="ui green button">Entrar</a>
+                <div href="#cadastroLogin" data-event='scroll' class="ui green button">Entrar</div>
             </div>
         </div>
 

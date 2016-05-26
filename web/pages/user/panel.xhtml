@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../Shared/_template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:define name="content">
+
+        <header class="image-header">
+            <div class="ui inverted vertical masthead segment" style="min-height: 200px">
+                <div class="ui text container">
+                    <h1 class="ui inverted header"  style="margin-top: 0.3em;">
+                        Painel
+                    </h1>
+                    <h3>
+                        Procure por ações, analize o mercado.
+                    </h3>
+                </div>
+
+            </div>
+        </header>
+
+        <section class="ui grid row container" style="margin-top: 2em">
+            <h:form class="ui form nine wide column">
+                <div class="field">
+                    <label>Pesquise por ação</label>
+                    <div class="ui icon input">
+                        <h:inputText a:placeholder="Digite o nome da ação. Ex: Vale5. Separe ações por ; " style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
+                                     value="#{panel.acaoPesquisada.acao}"/>
+                        <h:commandLink style="margin-bottom: 1px;margin-top: 1px;" class="right attached ui button"
+                                       action="#{panel.actionPesquisaAcao(panel.acaoPesquisada.acao)}">
+                            <i class="search icon"></i>
+                        </h:commandLink>
+                    </div>
+                </div>
+            </h:form>
+
+            
+            <h:panelGroup rendered="#{panel.resultadoPesquisa ne null}">
+                <div class="row">
+                    <h3>Resultados da pesquisa <span style="font-style: italic">#{panel.acaoPesquisada.acao}</span></h3>
+                </div>
+                
+                <h:form style="margin: 0;" class="row">
+                    <table class="ui very basic selectable celled table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Ação
+                                </th>
+
+                                <th>
+                                    Abertura
+                                </th>
+
+                                <th>
+                                    Máxima do dia
+                                </th>
+
+                                <th>
+                                    Mínima do dia
+                                </th>
+
+                                <th>
+                                    Média do dia
+                                </th>
+
+                                <th>
+                                    Última cotação
+                                </th>
+
+                                <th>
+                                    Variação
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <ui:repeat value="#{panel.resultadoPesquisa}" var="resultadoAcao" varStatus="indice">
+                                <tr>
+                                    <td>
+                                        #{resultadoAcao.acao}
+                                    </td>
+
+                                    <td>
+                                        R$#{resultadoAcao.aber_cotacao}
+                                    </td>
+
+                                    <td>
+                                        R$#{resultadoAcao.max_cotacao_dia}
+                                    </td>
+
+                                    <td>
+                                        R$#{resultadoAcao.min_cotacao_dia}
+                                    </td>
+
+                                    <td>
+                                        R$#{resultadoAcao.med_cotacao_dia}
+                                    </td>
+
+                                    <td>
+                                        R$#{resultadoAcao.ult_cotacao}
+                                    </td>
+
+                                    <td class="#{panel.tableColor(resultadoAcao.variacao)}">
+                                        R$#{resultadoAcao.variacao}
+                                    </td>
+
+                                    <td>
+                                        <h:commandLink action="#{panel.addAcaoToUser(resultadoAcao)}" styleClass="positive circular ui icon button"
+                                                       a:id="popup" a:data-content="Comprar" a:data-variation="small inverted">
+                                            <i class="icon dollar link"></i>
+                                        </h:commandLink>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+
+                </h:form>
+            </h:panelGroup>
+
+        </section>
+
+        <div class="ui divider"></div>
+
+        <section class="row container">
+
+
+
+        </section>
+
+    </ui:define>
+
+</ui:composition>
+

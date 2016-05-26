@@ -30,17 +30,17 @@
 
                     <div style="margin: 1em;">
 
-                        <form class="ui form">
+                        <h:form class="ui form">
                             <h4 class="ui dividing header">Informações da conta</h4>
                             <div class="field nine wide">
                                 <label>Login</label>
-                                <h:inputText value="#{cadastrar.usuario.login}" a:placeholder="Login"/>
+                                <h:inputText value="#{cadastroUsuario.usuario.login}" a:placeholder="Login"/>
                             </div>
                             
                             
                             <div class="field nine wide">
                                 <label>Senha</label>
-                                <h:inputSecret value="#{cadastrar.usuario.senha}" a:placeholder="Senha"/>
+                                <h:inputSecret value="#{cadastroUsuario.usuario.senha}" a:placeholder="Senha"/>
                             </div>
 
                             <h4 class="ui dividing header">Informações do usuário</h4>
@@ -48,46 +48,52 @@
                             <div class="two fields">
                                 <div class="field">
                                     <label>Nome</label>
-                                    <h:inputText value="#{cadastrar.usuario.nome}" a:placeholder="Nome"/>
+                                    <h:inputText value="#{cadastroUsuario.usuario.pessoa.nome}" a:placeholder="Nome"/>
                                 </div>
                                 
                                 <div class="field">
                                     <label>Profissão</label>
-                                    <h:inputText value="#{cadastrar.usuario.profissao}" a:placeholder="Profissão"/>
+                                    <h:inputText value="#{cadastroUsuario.usuario.pessoa.profissao}" a:placeholder="Profissão"/>
                                 </div>
                             </div>
                             
                             <div class="two fields">
                                 <div class="field">
                                     <label>CPF</label>
-                                    <h:inputText value="#{cadastrar.usuario.cpf}" a:placeholder="CPF"/>
+                                    <h:inputText value="#{cadastroUsuario.usuario.pessoa.cpf}" a:placeholder="CPF"/>
                                 </div>
                                 
                                 <div class="field">
                                     <label>RG</label>
-                                    <h:inputText value="#{cadastrar.usuario.rg}" a:placeholder="RG"/>
+                                    <h:inputText value="#{cadastroUsuario.usuario.pessoa.rg}" a:placeholder="RG"/>
                                 </div>
                             </div>
                             
                             <div class="two fields">
                                 <div class="twelve wide field">
                                     <label>Cidade</label>
-                                    <h:inputText value="#{cadastrar.usuario.cidade}" a:placeholder="Cidade"/>
+                                    <h:inputText value="#{cadastroUsuario.usuario.pessoa.cidade}" a:placeholder="Cidade"/>
                                 </div>
                                 
                                 <div class="four wide field">
                                     <label>Estado</label>
-                                    <h:inputText value="#{cadastrar.usuario.estado}" a:placeholder="Estado"/>
+                                    <h:inputText value="#{cadastroUsuario.usuario.pessoa.estado}" a:placeholder="Estado"/>
                                 </div>
                             </div>
                             
                             <div class="field">
                                 <label>Endereço</label>
-                                <h:inputSecret value="#{cadastrar.usuario.endereco}" a:placeholder="Endereço"/>
+                                <h:inputText value="#{cadastroUsuario.usuario.pessoa.endereco}" a:placeholder="Endereço"/>
                             </div>
                             
-                            <div class="ui button" tabindex="0">Cadastrar</div>
-                        </form>
+                            <h4 class="ui dividing header">Informações de negócio</h4>
+                            <div class="field nine wide">
+                                <label>Crédito investido</label>
+                                <h:inputText value="#{cadastroUsuario.usuario.pessoa.conta.credito}" a:placeholder="Investimento mínimo: R$500,00"/>
+                            </div>
+                            
+                            <h:commandButton class="ui button" tabindex="0" action="#{cadastroUsuario.actionCadastrarUsuario()}" value="Cadastrar"></h:commandButton>
+                        </h:form>
                     </div>
 
                 </div>
