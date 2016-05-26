@@ -5,7 +5,10 @@
  */
 package viewModel.Shared;
 
+import Model.DAO.BaseDAO;
 import Model.User.Usuario;
+import Util.Config;
+import Util.ConfigService;
 import Util.ErrorMessage;
 import Util.ValidationResult;
 import java.util.ArrayList;
@@ -23,11 +26,14 @@ public class SystemManagedBean {
     
     private List<ValidationResult> Validacao;
     private Usuario UsuarioLogado;
+    private Config Configuracao;
+    
 
     /**
      * Creates a new instance of SystemManagedBean
      */
     public SystemManagedBean() {
+        Configuracao = new ConfigService().prepareConfig();
     }
 
     public List<ValidationResult> getValidacao() {
@@ -61,6 +67,14 @@ public class SystemManagedBean {
         if(!temIgual){
             Validacao.add(valResult);
         }
+    }
+
+    public Config getConfiguracao() {
+        return Configuracao;
+    }
+
+    public void setConfiguracao(Config Configuracao) {
+        this.Configuracao = Configuracao;
     }
 
     public Usuario getUsuarioLogado() {

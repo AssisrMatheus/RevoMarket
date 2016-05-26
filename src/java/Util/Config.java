@@ -19,14 +19,19 @@ public class Config {
     @GeneratedValue
     private int Id;
     
-    private double InvestimentoMinimo, TaxaCorretagem, LimiteCorretagem, PercentCorretagem, TaxaFixaCorretagem;
+    private double InvestimentoMinimo, TaxaCorretagem, LimiteCorretagem, TaxaFixaCorretagem, PercentCorretagem, PercentTaxaNegociacao, PercentTaxaLiquidacao;
 
-    public Config(double InvestimentoMinimo, double TaxaCorretagem, double LimiteCorretagem, double PercentCorretagem, double TaxaFixaCorretagem) {
+    public Config() {
+    }
+
+    public Config(double InvestimentoMinimo, double TaxaCorretagem, double LimiteCorretagem, double TaxaFixaCorretagem, double PercentCorretagem, double PercentTaxaNegociacao, double PercentTaxaLiquidacao) {
         this.InvestimentoMinimo = InvestimentoMinimo;
         this.TaxaCorretagem = TaxaCorretagem;
         this.LimiteCorretagem = LimiteCorretagem;
-        this.PercentCorretagem = PercentCorretagem;
         this.TaxaFixaCorretagem = TaxaFixaCorretagem;
+        this.PercentCorretagem = PercentCorretagem;
+        this.PercentTaxaNegociacao = PercentTaxaNegociacao;
+        this.PercentTaxaLiquidacao = PercentTaxaLiquidacao;
     }
 
     public int getId() {
@@ -57,6 +62,14 @@ public class Config {
         this.LimiteCorretagem = LimiteCorretagem;
     }
 
+    public double getTaxaFixaCorretagem() {
+        return TaxaFixaCorretagem;
+    }
+
+    public void setTaxaFixaCorretagem(double TaxaFixaCorretagem) {
+        this.TaxaFixaCorretagem = TaxaFixaCorretagem;
+    }
+
     public double getPercentCorretagem() {
         return PercentCorretagem;
     }
@@ -65,13 +78,21 @@ public class Config {
         this.PercentCorretagem = PercentCorretagem;
     }
 
-    public double getTaxaFixaCorretagem() {
-        return TaxaFixaCorretagem;
+    public double getPercentTaxaNegociacao() {
+        return PercentTaxaNegociacao;
     }
 
-    public void setTaxaFixaCorretagem(double TaxaFixaCorretagem) {
-        this.TaxaFixaCorretagem = TaxaFixaCorretagem;
+    public void setPercentTaxaNegociacao(double PercentTaxaNegociacao) {
+        this.PercentTaxaNegociacao = PercentTaxaNegociacao;
     }
-    
+
+    public double getPercentTaxaLiquidacao() {
+        return PercentTaxaLiquidacao;
+    }
+
+    public void setPercentTaxaLiquidacao(double PercentTaxaLiquidacao) {
+        this.PercentTaxaLiquidacao = PercentTaxaLiquidacao;
+    }
+
     
 }

@@ -28,7 +28,7 @@ public class Pessoa {
     private Conta Conta;
 
     public Pessoa() {
-        this.Conta = new Conta(500);
+        this.Conta = new Conta();
     }
 
     public int getId() {

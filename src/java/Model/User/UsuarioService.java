@@ -16,7 +16,7 @@ import javax.persistence.Query;
 public class UsuarioService {
 
     public ValidationResult cadastraUsuario(Usuario usuario) {
-        ValidationResult result = this.ValidaUsuarioCadastro(usuario);
+        ValidationResult result = this.validaUsuarioCadastro(usuario);
         if (result.isSucess()) {
             BaseDAO dao = new BaseDAO();
 
@@ -33,14 +33,14 @@ public class UsuarioService {
         return result;
     }
 
-    private ValidationResult ValidaUsuarioCadastro(Usuario usuario) {
+    private ValidationResult validaUsuarioCadastro(Usuario usuario) {
         ValidationResult result = new ValidationResult("Cadastro");
 
         return result;
     }
 
     public ValidationResult loginValido(Usuario usuario) {
-        ValidationResult result = this.ValidaUsuarioLogin(usuario);
+        ValidationResult result = this.validaUsuarioLogin(usuario);
 
         if (result.isSucess()) {
             BaseDAO dao = new BaseDAO();
@@ -60,7 +60,7 @@ public class UsuarioService {
         return result;
     }
 
-    private ValidationResult ValidaUsuarioLogin(Usuario usuario) {
+    private ValidationResult validaUsuarioLogin(Usuario usuario) {
         ValidationResult result = new ValidationResult("Login");
 
         return result;

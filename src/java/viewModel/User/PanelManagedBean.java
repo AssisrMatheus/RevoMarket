@@ -7,10 +7,8 @@ package viewModel.User;
 
 import Model.Cotacao.Acao;
 import Model.Cotacao.CotacaoService;
-import Model.User.Usuario;
 import Util.ValidationResult;
 import java.util.List;
-import java.util.Objects;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -45,8 +43,8 @@ public class PanelManagedBean {
         return "panel";
     }
     
-    public String addAcaoToUser(Acao acao){
-        ValidationResult result = this.CotacaoService.addAcaoToUser(acao, systemMB.getUsuarioLogado());
+    public String compraAcao(Acao acao){
+        ValidationResult result = this.CotacaoService.compraAcao(acao, systemMB.getUsuarioLogado(), systemMB.getConfiguracao());
         systemMB.mergeValidacao(result);
         return "panel";
     }

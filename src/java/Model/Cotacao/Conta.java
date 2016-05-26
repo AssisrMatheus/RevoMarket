@@ -28,7 +28,7 @@ public class Conta {
     @GeneratedValue
     private int Id;
     
-    private double Credito;
+    private double Credito, CorretagemTotalPaga;
     
 //    @OneToOne(fetch = FetchType.LAZY)
 //    private Pessoa Pessoa;
@@ -55,8 +55,8 @@ public class Conta {
         return Credito;
     }
 
-    public void setCredito(double Credito) {
-        this.Credito = Credito;
+    public void descontaCredito(double gasto) {
+        this.Credito -= gasto;
     }
 
     public List<Acao> getAcoes() {
@@ -69,6 +69,8 @@ public class Conta {
     public void setAcoes(List<Acao> Acoes) {
         this.Acoes = Acoes;
     }
+    
+    
 
 //    public Pessoa getPessoa() {
 //        return Pessoa;
@@ -77,6 +79,14 @@ public class Conta {
 //    public void setPessoa(Pessoa Pessoa) {
 //        this.Pessoa = Pessoa;
 //    }
+
+    public double getCorretagemTotalPaga() {
+        return CorretagemTotalPaga;
+    }
+
+    public void addCorretagemTotalPaga(double precoCorretagem) {
+        this.CorretagemTotalPaga += precoCorretagem;
+    }
     
     
 }

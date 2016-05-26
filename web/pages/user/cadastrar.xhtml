@@ -89,7 +89,7 @@
                             <h4 class="ui dividing header">Informações de negócio</h4>
                             <div class="field nine wide">
                                 <label>Crédito investido</label>
-                                <h:inputText value="#{cadastroUsuario.usuario.pessoa.conta.credito}" a:placeholder="Investimento mínimo: R$500,00"/>
+                                <h:inputText value="#{systemMB.configuracao.investimentoMinimo}" a:placeholder="Investimento mínimo: R$#{systemMB.configuracao.investimentoMinimo}"/>
                             </div>
                             
                             <h:commandButton class="ui button" tabindex="0" action="#{cadastroUsuario.actionCadastrarUsuario()}" value="Cadastrar"></h:commandButton>

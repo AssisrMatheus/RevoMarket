@@ -22,105 +22,154 @@
         </header>
 
         <section class="ui grid row container" style="margin-top: 2em">
-            <h:form class="ui form nine wide column">
-                <div class="field">
-                    <label>Pesquise por ação</label>
-                    <div class="ui icon input">
-                        <h:inputText a:placeholder="Digite o nome da ação. Ex: Vale5. Separe ações por ; " style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
-                                     value="#{panel.acaoPesquisada.acao}"/>
-                        <h:commandLink style="margin-bottom: 1px;margin-top: 1px;" class="right attached ui button"
-                                       action="#{panel.actionPesquisaAcao(panel.acaoPesquisada.acao)}">
-                            <i class="search icon"></i>
-                        </h:commandLink>
+            <div class="eleven wide column">
+                <h:form class="ui form nine wide column">
+                    <div class="field">
+                        <label>Pesquise por ação</label>
+                        <div class="ui icon input">
+                            <h:inputText a:placeholder="Digite o nome da ação. Ex: Vale5. Separe ações por ; " style="border-top-right-radius: 0;border-bottom-right-radius: 0;"
+                                         value="#{panel.acaoPesquisada.acao}"/>
+                            <h:commandLink style="margin-bottom: 1px;margin-top: 1px;" class="right attached ui button"
+                                           action="#{panel.actionPesquisaAcao(panel.acaoPesquisada.acao)}">
+                                <i class="search icon"></i>
+                            </h:commandLink>
+                        </div>
                     </div>
-                </div>
-            </h:form>
-
-            
-            <h:panelGroup rendered="#{panel.resultadoPesquisa ne null}">
-                <div class="row">
-                    <h3>Resultados da pesquisa <span style="font-style: italic">#{panel.acaoPesquisada.acao}</span></h3>
-                </div>
-                
-                <h:form style="margin: 0;" class="row">
-                    <table class="ui very basic selectable celled table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Ação
-                                </th>
-
-                                <th>
-                                    Abertura
-                                </th>
-
-                                <th>
-                                    Máxima do dia
-                                </th>
-
-                                <th>
-                                    Mínima do dia
-                                </th>
-
-                                <th>
-                                    Média do dia
-                                </th>
-
-                                <th>
-                                    Última cotação
-                                </th>
-
-                                <th>
-                                    Variação
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <ui:repeat value="#{panel.resultadoPesquisa}" var="resultadoAcao" varStatus="indice">
-                                <tr>
-                                    <td>
-                                        #{resultadoAcao.acao}
-                                    </td>
-
-                                    <td>
-                                        R$#{resultadoAcao.aber_cotacao}
-                                    </td>
-
-                                    <td>
-                                        R$#{resultadoAcao.max_cotacao_dia}
-                                    </td>
-
-                                    <td>
-                                        R$#{resultadoAcao.min_cotacao_dia}
-                                    </td>
-
-                                    <td>
-                                        R$#{resultadoAcao.med_cotacao_dia}
-                                    </td>
-
-                                    <td>
-                                        R$#{resultadoAcao.ult_cotacao}
-                                    </td>
-
-                                    <td class="#{panel.tableColor(resultadoAcao.variacao)}">
-                                        R$#{resultadoAcao.variacao}
-                                    </td>
-
-                                    <td>
-                                        <h:commandLink action="#{panel.addAcaoToUser(resultadoAcao)}" styleClass="positive circular ui icon button"
-                                                       a:id="popup" a:data-content="Comprar" a:data-variation="small inverted">
-                                            <i class="icon dollar link"></i>
-                                        </h:commandLink>
-                                    </td>
-                                </tr>
-                            </ui:repeat>
-                        </tbody>
-                    </table>
-
                 </h:form>
-            </h:panelGroup>
 
+
+                <h:panelGroup rendered="#{(panel.resultadoPesquisa.size() ne 0) and (panel.resultadoPesquisa ne null)}"> 
+                    <div class="row">
+                        <h3>Resultados da pesquisa <span style="font-style: italic">#{panel.acaoPesquisada.acao}</span></h3>
+                    </div>
+
+                    <h:form style="margin: 0;" class="row">
+                        <table class="ui very basic selectable celled table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Ação
+                                    </th>
+
+                                    <th>
+                                        Abertura
+                                    </th>
+
+                                    <th>
+                                        Máxima do dia
+                                    </th>
+
+                                    <th>
+                                        Mínima do dia
+                                    </th>
+
+                                    <th>
+                                        Média do dia
+                                    </th>
+
+                                    <th>
+                                        Última cotação
+                                    </th>
+
+                                    <th>
+                                        Variação
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ui:repeat value="#{panel.resultadoPesquisa}" var="resultadoAcao" varStatus="indice">
+                                    <tr>
+                                        <td>
+                                            #{resultadoAcao.acao}
+                                        </td>
+
+                                        <td>
+                                            R$#{resultadoAcao.aber_cotacao}
+                                        </td>
+
+                                        <td>
+                                            R$#{resultadoAcao.max_cotacao_dia}
+                                        </td>
+
+                                        <td>
+                                            R$#{resultadoAcao.min_cotacao_dia}
+                                        </td>
+
+                                        <td>
+                                            R$#{resultadoAcao.med_cotacao_dia}
+                                        </td>
+
+                                        <td>
+                                            R$#{resultadoAcao.ult_cotacao}
+                                        </td>
+
+                                        <td class="#{panel.tableColor(resultadoAcao.variacao)}">
+                                            R$#{resultadoAcao.variacao}
+                                        </td>
+
+                                        <td>
+                                            <h:commandLink action="#{panel.compraAcao(resultadoAcao)}" styleClass="positive circular ui icon button"
+                                                           a:id="popup" a:data-content="Comprar" a:data-variation="small inverted">
+                                                <i class="icon dollar link"></i>
+                                            </h:commandLink>
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                            </tbody>
+                        </table>
+
+                    </h:form>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{panel.resultadoPesquisa.size() eq 0}">
+                        <div class="row">
+                            <h3>Pesquisa <span style="font-style: italic">#{panel.acaoPesquisada.acao}</span> não trouxe resultados. Tente novamente</h3>
+                        </div>                    
+                </h:panelGroup>
+            </div>
+
+            <div class="ui five wide column segment">
+                <table class="ui very basic collapsing celled table" style="margin: 0 auto;">
+                    <thead>
+                        <tr>
+                            <th>Taxas atuais</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="active">
+                            <td>Total gasto em corretagem</td>
+                            <td>R$#{systemMB.usuarioLogado.pessoa.conta.corretagemTotalPaga}</td>
+                        </tr>
+                        <tr>
+                            <td>Taxa de Corretagem</td>
+                            <td>R$#{systemMB.configuracao.taxaCorretagem}</td>
+                        </tr>
+                        <tr>
+                            <td>Limite de Corretagem Total</td>
+                            <td>R$#{systemMB.configuracao.limiteCorretagem}</td>
+                        </tr>
+                        <tr>
+                            <td>Corretagem após limite atingido</td>
+                            <td>R$#{systemMB.configuracao.taxaFixaCorretagem}</td>
+                        </tr>
+                        <tr>
+                            <td>Perc. corretagem após limite atingido</td>
+                            <td>#{systemMB.configuracao.percentCorretagem}%</td>
+                        </tr>
+                        <tr>
+                            <td>Percentual de negociação(Bm e FBbov.)</td>
+                            <td>#{systemMB.configuracao.percentTaxaNegociacao}%</td>
+                        </tr>
+                        <tr>
+                            <td>Percentual de liquidação(CBLC)</td>
+                            <td>#{systemMB.configuracao.percentTaxaLiquidacao}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <div class="ui divider"></div>
