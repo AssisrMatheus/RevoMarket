@@ -5,8 +5,9 @@
  */
 package Model.Cotacao;
 
-import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,10 +21,11 @@ import javax.persistence.ManyToOne;
 public class Acao {
     @Id
     @GeneratedValue
+    @Column(name = "ACAO_ID")
     private int Id;
     
-    @ManyToOne
-    @JoinColumn(name = "Acao_Id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CONTA_ID", referencedColumnName = "ACAO_ID")
     private Conta Conta;
     
     private String acao;

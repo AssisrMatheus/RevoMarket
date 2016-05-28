@@ -9,6 +9,7 @@ import Model.User.Pessoa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ import oracle.jrockit.jfr.tools.ConCatRepository;
 public class Conta {
     @Id
     @GeneratedValue
+    @Column(name = "CONTA_ID")
     private int Id;
     
     private double Credito, CorretagemTotalPaga;
@@ -33,7 +35,8 @@ public class Conta {
 //    @OneToOne(fetch = FetchType.LAZY)
 //    private Pessoa Pessoa;
     
-    @OneToMany(mappedBy = "Conta")
+    @OneToMany(mappedBy = "Conta", cascade = CascadeType.PERSIST, targetEntity = Acao.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACAO_ID", referencedColumnName = "ID")
     private List<Acao> Acoes;
 
     public Conta() {
@@ -55,6 +58,10 @@ public class Conta {
         return Credito;
     }
 
+    public void setCredito(double Credito) {
+        this.Credito = Credito;
+    }
+    
     public void descontaCredito(double gasto) {
         this.Credito -= gasto;
     }

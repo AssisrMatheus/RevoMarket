@@ -11,19 +11,7 @@ import Model.User.UsuarioService;
 import Util.AcaoJsonHelper;
 import Util.Config;
 import Util.ValidationResult;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
-import javax.persistence.EntityManager;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 /**
  *
@@ -51,19 +39,21 @@ public class CotacaoService {
 
         if (result.isSucess()) {
             try {
+                BaseDAO dao = new BaseDAO();
+
+                dao.getEntityManager().find(Usuario.class, usuario.getId());
+                dao.getEntityManager().getTransaction().begin();
+                usuario = dao.getEntityManager().merge(usuario);
+
+                //Adiciona a conta do usuario a acao
+                acaoToAdd.setConta(usuario.getPessoa().getConta());
                 //Adiciona a acao para o usuario
                 usuario.getPessoa().getConta().getAcoes().add(acaoToAdd);
                 //Desconta o preço do seu crédito
                 usuario.getPessoa().getConta().descontaCredito(this.getPrecoComTaxas(acaoToAdd.getUlt_cotacao(), usuario, configuracao));
                 //Sobe o limite de corretagem.
                 usuario.getPessoa().getConta().addCorretagemTotalPaga(configuracao.getTaxaCorretagem());
-
-                BaseDAO dao = new BaseDAO();
-
-                dao.getEntityManager().find(Usuario.class, usuario.getId());
-
-                dao.getEntityManager().getTransaction().begin();
-                usuario = dao.getEntityManager().merge(usuario);
+                
                 dao.getEntityManager().refresh(usuario);
                 dao.getEntityManager().getTransaction().commit();
                 dao.close();

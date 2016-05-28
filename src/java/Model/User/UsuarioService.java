@@ -14,7 +14,9 @@ import javax.persistence.Query;
  * @author adowt
  */
 public class UsuarioService {
-
+    
+    private Usuario ultimoUsuario;
+    
     public ValidationResult cadastraUsuario(Usuario usuario) {
         ValidationResult result = this.validaUsuarioCadastro(usuario);
         if (result.isSucess()) {
@@ -35,6 +37,10 @@ public class UsuarioService {
 
     private ValidationResult validaUsuarioCadastro(Usuario usuario) {
         ValidationResult result = new ValidationResult("Cadastro");
+        
+        if(usuario.getPessoa().getConta().getCredito() < 500){
+            result.addError("O investimento mínimo é de R$500");
+        }
 
         return result;
     }
@@ -50,7 +56,7 @@ public class UsuarioService {
             query.setParameter("senha", usuario.getSenha());
 
             try {
-                query.getSingleResult();
+                setUltimoUsuario((Usuario)query.getSingleResult());
             } catch (Exception ex) {
                 result.addError("Não foi possível conectar e verificar o login");
                 return result;
@@ -76,5 +82,13 @@ public class UsuarioService {
         } catch (Exception ex) {
             return -999;
         }
+    }
+
+    public Usuario getUltimoUsuario() {
+        return ultimoUsuario;
+    }
+
+    private void setUltimoUsuario(Usuario ultimoUsuario) {
+        this.ultimoUsuario = ultimoUsuario;
     }
 }

@@ -7,6 +7,7 @@ package viewModel.User;
 
 import Model.Cotacao.Acao;
 import Model.Cotacao.CotacaoService;
+import Util.AcaoJsonHelper;
 import Util.ValidationResult;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -46,7 +47,15 @@ public class PanelManagedBean {
     public String compraAcao(Acao acao){
         ValidationResult result = this.CotacaoService.compraAcao(acao, systemMB.getUsuarioLogado(), systemMB.getConfiguracao());
         systemMB.mergeValidacao(result);
+        
+//        this.AcaoPesquisada=null;
+//        this.ResultadoPesquisa=null;
+        
         return "panel";
+    }
+    
+    public Acao getAcaoOnline(String termoAcao){
+        return new AcaoJsonHelper().getSingleAcaoFromJson("http://cotacao.davesmartins.com.br/webCotacao/?cod="+termoAcao);
     }
 
     public Acao getAcaoPesquisada() {

@@ -26,8 +26,7 @@ public class SystemManagedBean {
     
     private List<ValidationResult> Validacao;
     private Usuario UsuarioLogado;
-    private Config Configuracao;
-    
+    private Config Configuracao;    
 
     /**
      * Creates a new instance of SystemManagedBean

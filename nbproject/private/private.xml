@@ -4,13 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/viewModel/Shared/SystemManagedBean.java</file>
-            <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/Model/User/Pessoa.java</file>
+            <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/conf/persistence.xml</file>
             <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/Util/AcaoJsonHelper.java</file>
             <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/Model/Cotacao/Conta.java</file>
-            <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/Model/User/Usuario.java</file>
             <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/viewModel/User/PanelManagedBean.java</file>
             <file>file:/A:/Documentos%20Principal/Github/RevoMarket/web/pages/user/panel.xhtml</file>
             <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/Model/Cotacao/CotacaoService.java</file>
+            <file>file:/A:/Documentos%20Principal/Github/RevoMarket/src/java/viewModel/Index/IndexManagedBean.java</file>
         </group>
     </open-files>
 </project-private>

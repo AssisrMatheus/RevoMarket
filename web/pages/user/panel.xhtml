@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../../Shared/_template.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="content">
 
@@ -21,6 +22,7 @@
             </div>
         </header>
 
+<!--        Pesquisa-->
         <section class="ui grid row container" style="margin-top: 2em">
             <div class="eleven wide column">
                 <h:form class="ui form nine wide column">
@@ -37,7 +39,7 @@
                     </div>
                 </h:form>
 
-
+<!--                Resultados da pesquisa-->
                 <h:panelGroup rendered="#{(panel.resultadoPesquisa.size() ne 0) and (panel.resultadoPesquisa ne null)}"> 
                     <div class="row">
                         <h3>Resultados da pesquisa <span style="font-style: italic">#{panel.acaoPesquisada.acao}</span></h3>
@@ -122,13 +124,15 @@
                     </h:form>
                 </h:panelGroup>
 
+<!--                Nenhum resultado na pesquisa-->
                 <h:panelGroup rendered="#{panel.resultadoPesquisa.size() eq 0}">
-                        <div class="row">
-                            <h3>Pesquisa <span style="font-style: italic">#{panel.acaoPesquisada.acao}</span> não trouxe resultados. Tente novamente</h3>
-                        </div>                    
+                    <div class="row">
+                        <h3>Pesquisa <span style="font-style: italic">#{panel.acaoPesquisada.acao}</span> não trouxe resultados. Tente novamente</h3>
+                    </div>                    
                 </h:panelGroup>
             </div>
 
+<!--            Taxas-->
             <div class="ui five wide column segment">
                 <table class="ui very basic collapsing celled table" style="margin: 0 auto;">
                     <thead>
@@ -174,9 +178,107 @@
 
         <div class="ui divider"></div>
 
-        <section class="row container">
+<!--        Panel-->
+        <section class="ui grid row container">
 
+            <div class="ui thirteen wide column">
+                <!--            Nenhuma Ação-->
+                <h:panelGroup rendered="#{systemMB.usuarioLogado.pessoa.conta.acoes.size() eq 0}"> 
+                    <div class="row">
+                       <h3>Você não possui nenhuma ação. Compre ações usando a busca acima</h3>
+                    </div>
+                </h:panelGroup>
+                
+                <!--            Ações do usuário-->
+                <h:panelGroup rendered="#{systemMB.usuarioLogado.pessoa.conta.acoes.size() ne 0}"> 
+                    <div class="row">
+                       <h3>Suas ações</h3>
+                    </div>
 
+                    <h:form style="margin: 0;" class="row">
+                        <table class="ui very basic selectable celled table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Ação
+                                    </th>
+
+                                    <th>
+                                        Média do dia
+                                    </th>
+
+                                    <th>
+                                        Variação
+                                    </th>
+                                    
+                                    <th>
+                                        Última cotação
+                                    </th>
+                                    
+                                    <th>
+                                        Cotação ao comprar
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ui:repeat value="#{systemMB.usuarioLogado.pessoa.conta.acoes}" var="acaoUsuario" varStatus="indice">
+                                    <c:set var="acaoAtual" value="#{panel.getAcaoOnline(acaoUsuario.acao)}" />
+                                    <tr>
+                                        <td>
+                                            #{acaoUsuario.acao}
+                                        </td>
+
+                                        <td>
+                                            R$#{acaoUsuario.aber_cotacao}
+                                        </td>
+
+                                        <td>
+                                            R$#{acaoUsuario.max_cotacao_dia}
+                                        </td>
+
+                                        <td>
+                                            R$#{acaoUsuario.min_cotacao_dia}
+                                        </td>
+
+                                        <td class="#{panel.tableColor(resultadoAcao.variacao)}">
+                                            R$#{acaoUsuario.variacao}
+                                        </td>
+                                        
+                                        <td>
+                                            R$#{acaoUsuario.med_cotacao_dia}
+                                        </td>
+
+                                        <td>
+                                            R$#{acaoAtual.ult_cotacao}
+                                        </td>
+
+                                        <td>
+                                            R$#{resultadoAcao.ult_cotacao}
+                                        </td>                                        
+
+                                        <td>
+                                            <h:commandLink action="#{panel.compraAcao(resultadoAcao)}" styleClass="positive circular ui icon button"
+                                                           a:id="popup" a:data-content="Comprar" a:data-variation="small inverted">
+                                                <i class="icon dollar link"></i>
+                                            </h:commandLink>
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                            </tbody>
+                        </table>
+
+                    </h:form>
+                </h:panelGroup>
+                
+            </div>
+
+            <div class="ui three wide column vertical buttons">
+                <button class="ui button">Feed</button>
+                <button class="ui button">Messages</button>
+                <button class="ui button">Events</button>
+                <button class="ui button">Photos</button>
+            </div>
 
         </section>
 

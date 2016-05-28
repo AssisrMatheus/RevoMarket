@@ -40,7 +40,7 @@ public class AcaoJsonHelper {
                     //SE O SERVER NUNCA RESPONDER PODE GERAR DEADLOCK
                     //SE A VARIACAO FOR REALMENTE 0 VAI GERAR DEADLOCK
                     //SE A ACAO NAO EXISTIR GERA DEADLOCK
-                    buscar = true;
+//                    buscar = true;
                 }
             }
         } catch (Exception ex) {
@@ -48,10 +48,33 @@ public class AcaoJsonHelper {
         }
 
         //Busca de novo recursivamente se uma ação nao foi encontrada
-        if (buscar) {
-            return this.getAcoesFromJson(jsonServ);
-        } else {
+//        if (buscar) {
+//            return this.getAcoesFromJson(jsonServ);
+//        } else {
             return acoes;
+//        }
+    }
+    
+    public Acao getSingleAcaoFromJson(String jsonServ) {
+        List<Acao> acoes = null;
+        try {
+            //Busca o json do server
+            String json = this.readUrl(jsonServ);
+            //Muda a virgula pro ponto
+            json = json.replaceAll("(\\d),(\\d)", "\\1.\\2");
+
+            //Preenche o OBJ com o json
+            acoes = getAcoesFromJsonString(json);
+
+            //Limpa as ações que o servidor trouxe não preenchidas
+            for (Acao acao : acoes) {
+                if (acao.getVariacao() == 0.0 && acao.getAber_cotacao() == 0.0 && acao.getMax_cotacao_dia() == 0.0 && acao.getMed_cotacao_dia() == 0.0 && acao.getMin_cotacao_dia() == 0.0 && acao.getUlt_cotacao() == 0.0) {
+                    acoes.remove(acao);
+                }
+            }
+        } 
+        finally {
+            return acoes.get(0);
         }
     }
 
