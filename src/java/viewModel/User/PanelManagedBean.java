@@ -36,12 +36,12 @@ public class PanelManagedBean {
      * Creates a new instance of PanelManagedBean
      */
     public PanelManagedBean() {
-        CotacaoService = new CotacaoService();
-        AcaoPesquisada = new Acao();
     }
     
     @PostConstruct
     public void PreparePanel(){
+        CotacaoService = new CotacaoService(systemMB.getUsuarioLogado(), systemMB.getConfiguracao());
+        AcaoPesquisada = new Acao();
         this.updateAcoesUsuarioList();
     }
     
@@ -53,11 +53,21 @@ public class PanelManagedBean {
     
     //Ação do botão de compra de ação no resultado da pesquisa
     public String compraAcao(Acao acao){
-        ValidationResult result = this.CotacaoService.compraAcao(acao, systemMB.getUsuarioLogado(), systemMB.getConfiguracao());
+        ValidationResult result = this.CotacaoService.compraAcao(acao);
         systemMB.mergeValidacao(result);
         systemMB.updateUsuario();
+        
 //        this.AcaoPesquisada=null;
 //        this.ResultadoPesquisa=null;
+        
+        return "panel";
+    }
+    
+    //Ação do botão de compra de ação no resultado da pesquisa
+    public String vendeAcao(Acao acao, double precoAtualizadoUnico, int quantidade){
+        ValidationResult result = this.CotacaoService.vendeAcao(acao, precoAtualizadoUnico, quantidade);
+        systemMB.mergeValidacao(result);
+        systemMB.updateUsuario();
         
         return "panel";
     }
@@ -67,7 +77,7 @@ public class PanelManagedBean {
         return this.CotacaoService.getPrecoComTaxas(cotacao, systemMB.getUsuarioLogado(), systemMB.getConfiguracao());
     }
     
-    //Pega uma ação atualizada(Usada na tabela de ações, para comparar com ações do usuário)
+    //Pega uma ação atualizada(Usada na tabela de mostrar ações para comparar com ações do usuário)
     public Acao getAcaoOnline(String termoAcao){
         if(this.AcoesUsuarioAtualizadas == null)
             this.updateAcoesUsuarioList();
@@ -88,7 +98,9 @@ public class PanelManagedBean {
         //Pega a lista de acoes de um usuario, e busca as informações mais recentes de todas as ações
         //Indo somente uma vez no web service
         this.AcoesUsuarioAtualizadas = this.systemMB.getUsuarioLogado().getPessoa().getConta().getAcoes();
-        return this.CotacaoService.pesquisaAcaoWithList(this.AcoesUsuarioAtualizadas);
+        List<Acao> acoes = this.CotacaoService.pesquisaAcaoWithList(this.AcoesUsuarioAtualizadas);
+        this.AcoesUsuarioAtualizadas = acoes;
+        return acoes;
     }
     
     //Retorna positivo ou negativo para pintar de verde/vermelho as colunas das tabelas e ícones
@@ -97,7 +109,7 @@ public class PanelManagedBean {
     }
     
     //Método para encurtar a comparação de ações direto no html para retornar visualmente
-    //se as ações estão mais caras/baratas
+    //se as ações estão mais caras/baratas usando o visual
     public boolean compareAcaoComTaxas(Acao acaoUm, Acao acaoDois){
         return (this.getPrecoAcao(acaoUm.getSubtotal())
                 >

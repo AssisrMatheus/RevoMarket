@@ -41,7 +41,7 @@ public class Conta {
     public Conta() {
     }
     
-    public void mergeAcoes(Acao acaoToAdd) {
+    public void mergeAcao(Acao acaoToAdd) {
         boolean igual = false;
         //Para cada acao
         for (Acao acao : this.getAcoes()) {
@@ -63,6 +63,21 @@ public class Conta {
             this.getAcoes().add(acaoToAdd);
     }
     
+    public void removeAcao(Acao acaoToAdd, int quantidade) {
+        //Para cada acao
+        this.getAcoes().removeIf(x -> x.getAcao().equals(acaoToAdd.getAcao()) &&
+                x.getAber_cotacao() == acaoToAdd.getAber_cotacao() &&
+                x.getMax_cotacao_dia() == acaoToAdd.getMax_cotacao_dia() &&
+                x.getMed_cotacao_dia() == acaoToAdd.getMed_cotacao_dia() &&
+                x.getMin_cotacao_dia() == acaoToAdd.getMin_cotacao_dia() &&
+                x.getUlt_cotacao() == acaoToAdd.getUlt_cotacao() &&
+                x.getVariacao() == acaoToAdd.getVariacao());
+    }
+    
+    //Pega a quantidade de ações de um usuário.
+    //Nem sempre a quantidade da lista é a quantidade de ações
+    //pois ações não idênticas são adicionadas separadamente
+    //Então é preciso iterar
     public int quantAcoes(){
         int quant = 0;
         for (Acao acao : this.getAcoes()) {
@@ -93,6 +108,10 @@ public class Conta {
     
     public void descontaCredito(double gasto) {
         this.Credito -= gasto;
+    }
+    
+    public void addCredito(double credito) {
+        this.Credito += credito;
     }
 
     public List<Acao> getAcoes() {

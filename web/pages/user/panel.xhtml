@@ -224,9 +224,9 @@
         <div class="ui divider"></div>
 
         <!--        Panel-->
-        <section class="ui grid row container">
+        <section class="ui row container">
 
-            <div class="ui fourteen wide column">
+            <div>
                 <!--            Nenhuma Ação-->
                 <h:panelGroup rendered="#{systemMB.usuarioLogado.pessoa.conta.acoes.size() eq 0}"> 
                     <div class="row">
@@ -246,10 +246,6 @@
                                 <tr>
                                     <th>
                                         Ação
-                                    </th>
-
-                                    <th>
-                                        Quantidade
                                     </th>
 
                                     <th>
@@ -275,6 +271,10 @@
                                     <th>
                                         Diferença
                                     </th>
+
+                                    <th>
+                                        Quantidade
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -284,10 +284,6 @@
                                     <tr>
                                         <td>
                                             #{acaoUsuario.acao}
-                                        </td>
-
-                                        <td>
-                                            #{acaoUsuario.quantidade}
                                         </td>
 
                                         <td>
@@ -337,9 +333,15 @@
                                             </h:outputText>
                                         </td>   
 
+                                        <td class="ui field">
+<!--                                            <ui:param name="quantVenda" value="#{acaoUsuario.quantidade}" />
+                                            <h:inputText value="#{quantVenda}" id="acaoQuant"></h:inputText> -->
+                                            #{acaoUsuario.quantidade}
+                                        </td>
+
                                         <td>
-                                            <h:commandLink action="#{panel.compraAcao(resultadoAcao)}" styleClass="positive circular ui icon button"
-                                                           a:id="popup" a:data-content="Comprar" a:data-variation="small inverted">
+                                            <h:commandLink action="#{panel.vendeAcao(acaoUsuario, acaoAtual.ult_cotacao, acaoUsuario.quantidade)}" styleClass="negative circular ui icon button"
+                                                           a:id="popup" a:data-content="Vender Ação" a:data-variation="small inverted">
                                                 <i class="icon dollar link"></i>
                                             </h:commandLink>
                                         </td>
@@ -351,13 +353,6 @@
                     </h:form>
                 </h:panelGroup>
 
-            </div>
-
-            <div class="ui two wide column vertical buttons">
-                <button class="ui button">Feed</button>
-                <button class="ui button">Messages</button>
-                <button class="ui button">Events</button>
-                <button class="ui button">Photos</button>
             </div>
 
         </section>
