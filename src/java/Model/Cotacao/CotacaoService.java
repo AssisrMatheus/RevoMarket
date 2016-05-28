@@ -21,16 +21,15 @@ public class CotacaoService {
 
     private UsuarioService UsuarioService;
 
-    public CotacaoService() {
-    }
-
     public ValidationResult validaCompraAcao(Acao acaoToAdd, Usuario usuario, Config configuracao) {
         ValidationResult result = new ValidationResult("Panel");
 
-        if (usuario.getPessoa().getConta().getCredito() <= this.getPrecoComTaxas(acaoToAdd.getUlt_cotacao(), usuario, configuracao)) {
+        if(acaoToAdd.getQuantidade()<1)
+            result.addError("Você precisa comprar pelo menos 01 ação(Quantidade)");
+        
+        if (usuario.getPessoa().getConta().getCredito() <= this.getPrecoComTaxas(acaoToAdd.getSubtotal(), usuario, configuracao))
             result.addError("Você não possui crédito suficiente");
-        }
-
+        
         return result;
     }
 
@@ -47,10 +46,10 @@ public class CotacaoService {
 
                 //Adiciona a conta do usuario a acao
                 acaoToAdd.setConta(usuario.getPessoa().getConta());
-                //Adiciona a acao para o usuario
-                usuario.getPessoa().getConta().getAcoes().add(acaoToAdd);
+                //Adiciona a acao para o usuario(Se ele já tiver uma ação identica, só adiciona à quantidade)
+                usuario.getPessoa().getConta().mergeAcoes(acaoToAdd);
                 //Desconta o preço do seu crédito
-                usuario.getPessoa().getConta().descontaCredito(this.getPrecoComTaxas(acaoToAdd.getUlt_cotacao(), usuario, configuracao));
+                usuario.getPessoa().getConta().descontaCredito(this.getPrecoComTaxas(acaoToAdd.getSubtotal(), usuario, configuracao));
                 //Sobe o limite de corretagem.
                 usuario.getPessoa().getConta().addCorretagemTotalPaga(configuracao.getTaxaCorretagem());
                 
@@ -65,25 +64,31 @@ public class CotacaoService {
         return result;
     }
 
-    public List<Acao> pesquisaCotacaoAcao(String termo) {
+    public List<Acao> pesquisaCotacaoAcaoUnica(String termo) {
         return new AcaoJsonHelper().getAcoesFromJson("http://cotacao.davesmartins.com.br/webCotacao/?cod=" + termo);
+    }
+    
+    public List<Acao> pesquisaAcaoWithList(List<Acao> acoes){
+        String termo = "";
+        for (Acao acao : acoes){
+            termo += acao.getAcao() + ";";
+        }
+        return this.pesquisaCotacaoAcaoUnica(termo);
     }
 
     public double getPrecoComTaxas(double precoCotacao, Usuario usuario, Config configuracao) {
-        double gasto = 0;
-
         //Se o total de corretagem pago deste usuario for menor que o limite, é uma taxa fixa
         if (usuario.getPessoa().getConta().getCorretagemTotalPaga() < configuracao.getLimiteCorretagem()) {
-            gasto += configuracao.getTaxaCorretagem();
+            precoCotacao += configuracao.getTaxaCorretagem();
         } else //Senão, adiciona a nova taxa fixa, e mais a porcentagem 
         {
-            gasto += (configuracao.getTaxaFixaCorretagem()) + (configuracao.getPercentCorretagem() * precoCotacao);
+            precoCotacao += (configuracao.getTaxaFixaCorretagem()) + (configuracao.getPercentCorretagem() * precoCotacao);
         }
 
         //Adiciona os percentuais de negociação e liquidação
-        gasto += (configuracao.getPercentTaxaNegociacao() + configuracao.getPercentTaxaLiquidacao()) * precoCotacao;
+        precoCotacao += (configuracao.getPercentTaxaNegociacao() + configuracao.getPercentTaxaLiquidacao()) * precoCotacao;
 
-        return gasto;
+        return precoCotacao;
     }
 
     public UsuarioService getUsuarioService() {

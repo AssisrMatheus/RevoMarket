@@ -25,11 +25,22 @@ public class Acao {
     private int Id;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CONTA_ID", referencedColumnName = "ACAO_ID")
+    @JoinColumn(name = "CONTA_ID", referencedColumnName = "CONTA_ID")
     private Conta Conta;
     
+    @Column(name = "ACAO_NOME")
     private String acao;
     private double aber_cotacao, max_cotacao_dia, min_cotacao_dia, med_cotacao_dia, ult_cotacao, variacao;
+    
+    private int Quantidade;
+
+    public Acao() {
+        this.Quantidade = 1;
+    }
+    
+    public double getSubtotal(){
+        return this.Quantidade*this.ult_cotacao;
+    }
 
     public int getId() {
         return Id;
@@ -103,6 +114,11 @@ public class Acao {
         this.variacao = variacao;
     }
 
-    
-    
+    public int getQuantidade() {
+        return Quantidade;
+    }
+
+    public void setQuantidade(int Quantidade) {
+        this.Quantidade = Quantidade;
+    }
 }

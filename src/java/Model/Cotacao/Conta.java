@@ -36,10 +36,39 @@ public class Conta {
 //    private Pessoa Pessoa;
     
     @OneToMany(mappedBy = "Conta", cascade = CascadeType.PERSIST, targetEntity = Acao.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACAO_ID", referencedColumnName = "ID")
     private List<Acao> Acoes;
 
     public Conta() {
+    }
+    
+    public void mergeAcoes(Acao acaoToAdd) {
+        boolean igual = false;
+        //Para cada acao
+        for (Acao acao : this.getAcoes()) {
+            if(acao.getAcao().equals(acaoToAdd.getAcao()) &&
+                    acao.getAber_cotacao() == acaoToAdd.getAber_cotacao() &&
+                    acao.getMax_cotacao_dia() == acaoToAdd.getMax_cotacao_dia() &&
+                    acao.getMed_cotacao_dia() == acaoToAdd.getMed_cotacao_dia() &&
+                    acao.getMin_cotacao_dia() == acaoToAdd.getMin_cotacao_dia() &&
+                    acao.getUlt_cotacao() == acaoToAdd.getUlt_cotacao() &&
+                    acao.getVariacao() == acaoToAdd.getVariacao()){
+                //Se tiver uma idêntica só aumenta a quantidade
+                igual = true;
+                acao.setQuantidade(acao.getQuantidade()+1);
+            }
+        }
+        
+        //Senão, adiciona a nova ação não idêntica(pode ser a mesma mas com valores diferentes)
+        if(!igual)
+            this.getAcoes().add(acaoToAdd);
+    }
+    
+    public int quantAcoes(){
+        int quant = 0;
+        for (Acao acao : this.getAcoes()) {
+            quant += acao.getQuantidade();
+        }
+        return quant;
     }
     
     public Conta(double Credito) {
@@ -76,8 +105,6 @@ public class Conta {
     public void setAcoes(List<Acao> Acoes) {
         this.Acoes = Acoes;
     }
-    
-    
 
 //    public Pessoa getPessoa() {
 //        return Pessoa;

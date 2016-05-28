@@ -21,7 +21,7 @@ public class ConfigService {
         //Cria a query
         Query query = dao.getEntityManager().createQuery("SELECT c FROM Config c ");
         //Cria uma config padrao
-        Config configPadrao = new Config(500.0, 20.0, 5000.0, 15.21, 0.5, 0.0275, 0.005);
+        Config configPadrao = new Config(500.0, 20.0, 5000.0, 15.21, 0.5, 0.0275, 0.005, "http://cotacao.davesmartins.com.br/webCotacao/?cod=");
 
         //Tenta buscar do banco
         try {

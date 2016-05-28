@@ -83,9 +83,22 @@ public class UsuarioService {
             return -999;
         }
     }
+    
+    public Usuario getUpdateUsuario(Usuario usuario) {
+         try {
+            BaseDAO dao = new BaseDAO();
 
-    public Usuario getUltimoUsuario() {
-        return ultimoUsuario;
+            Query query = dao.getEntityManager().createQuery("SELECT u FROM Usuario u WHERE u.Id = :usuId");
+            query.setParameter("usuId", usuario.getId());
+
+            return (Usuario) query.getSingleResult();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public Usuario getUltimoUsuario(){
+        return this.ultimoUsuario;
     }
 
     private void setUltimoUsuario(Usuario ultimoUsuario) {

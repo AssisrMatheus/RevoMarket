@@ -20,6 +20,7 @@ public class Config {
     private int Id;
     
     private double InvestimentoMinimo, TaxaCorretagem, LimiteCorretagem, TaxaFixaCorretagem, PercentCorretagem, PercentTaxaNegociacao, PercentTaxaLiquidacao;
+    private String cotacaoServiceUrl;
 
     public Config() {
     }
@@ -33,6 +34,19 @@ public class Config {
         this.PercentTaxaNegociacao = PercentTaxaNegociacao;
         this.PercentTaxaLiquidacao = PercentTaxaLiquidacao;
     }
+
+    public Config(double InvestimentoMinimo, double TaxaCorretagem, double LimiteCorretagem, double TaxaFixaCorretagem, double PercentCorretagem, double PercentTaxaNegociacao, double PercentTaxaLiquidacao, String cotacaoServiceUrl) {
+        this.InvestimentoMinimo = InvestimentoMinimo;
+        this.TaxaCorretagem = TaxaCorretagem;
+        this.LimiteCorretagem = LimiteCorretagem;
+        this.TaxaFixaCorretagem = TaxaFixaCorretagem;
+        this.PercentCorretagem = PercentCorretagem;
+        this.PercentTaxaNegociacao = PercentTaxaNegociacao;
+        this.PercentTaxaLiquidacao = PercentTaxaLiquidacao;
+        this.cotacaoServiceUrl = cotacaoServiceUrl;
+    }
+    
+    
 
     public int getId() {
         return Id;
@@ -94,5 +108,14 @@ public class Config {
         this.PercentTaxaLiquidacao = PercentTaxaLiquidacao;
     }
 
+    public String getCotacaoServiceUrl() {
+        return cotacaoServiceUrl;
+    }
+
+    public void setCotacaoServiceUrl(String cotacaoServiceUrl) {
+        this.cotacaoServiceUrl = cotacaoServiceUrl;
+    }
+
+    
     
 }

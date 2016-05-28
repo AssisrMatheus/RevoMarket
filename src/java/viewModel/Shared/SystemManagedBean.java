@@ -7,6 +7,7 @@ package viewModel.Shared;
 
 import Model.DAO.BaseDAO;
 import Model.User.Usuario;
+import Model.User.UsuarioService;
 import Util.Config;
 import Util.ConfigService;
 import Util.ErrorMessage;
@@ -35,6 +36,11 @@ public class SystemManagedBean {
         Configuracao = new ConfigService().prepareConfig();
     }
 
+    public void updateUsuario()
+    {
+        this.UsuarioLogado = new UsuarioService().getUpdateUsuario(UsuarioLogado);
+    }
+    
     public List<ValidationResult> getValidacao() {
         if(this.Validacao == null){
             Validacao = new ArrayList<>();
