@@ -32,12 +32,14 @@ public class CotacaoService {
     public ValidationResult validaCompraAcao(Acao acaoToAdd) {
         ValidationResult result = new ValidationResult("Panel");
 
-        if(acaoToAdd.getQuantidade()<1)
+        if (acaoToAdd.getQuantidade() < 1) {
             result.addError("Você precisa comprar pelo menos 01 ação(Quantidade)");
-        
-        if (this.UsuarioLogado.getPessoa().getConta().getCredito() <= this.getPrecoComTaxas(acaoToAdd.getSubtotal(), this.UsuarioLogado, this.Configuracao))
+        }
+
+        if (this.UsuarioLogado.getPessoa().getConta().getCredito() <= this.getPrecoComTaxas(acaoToAdd.getSubtotal(), this.UsuarioLogado, this.Configuracao)) {
             result.addError("Você não possui crédito suficiente");
-        
+        }
+
         return result;
     }
 
@@ -61,7 +63,7 @@ public class CotacaoService {
                 usuario.getPessoa().getConta().descontaCredito(this.getPrecoComTaxas(acaoToAdd.getSubtotal(), usuario, this.Configuracao));
                 //Sobe o limite de corretagem.
                 usuario.getPessoa().getConta().addCorretagemTotalPaga(this.Configuracao.getTaxaCorretagem());
-                
+
                 dao.getEntityManager().refresh(usuario);
                 dao.getEntityManager().getTransaction().commit();
                 dao.close();
@@ -72,19 +74,19 @@ public class CotacaoService {
 
         return result;
     }
-    
+
     //Valida se pode vender a ação
-    public ValidationResult validaVendaAcao(Acao acaoUsuario, double precoAtualizadoUnico, int quantidade)
-    {
+    public ValidationResult validaVendaAcao(Acao acaoUsuario, double precoAtualizadoUnico, int quantidade) {
         ValidationResult result = new ValidationResult("Panel");
 
-        if(quantidade > acaoUsuario.getQuantidade())
-            result.addError("Você não pode vender mais que a quantidade que você tem dessa ação " + acaoUsuario.getAcao() +"(R$"+acaoUsuario.getUlt_cotacao()+")");
-        
+        if (quantidade > acaoUsuario.getQuantidade()) {
+            result.addError("Você não pode vender mais que a quantidade que você tem dessa ação " + acaoUsuario.getAcao() + "(R$" + acaoUsuario.getUlt_cotacao() + ")");
+        }
+
         return result;
     }
-    
-    public ValidationResult vendeAcao(Acao acaoUsuario, double precoAtualizadoUnico, int quantidade){
+
+    public ValidationResult vendeAcao(Acao acaoUsuario, double precoAtualizadoUnico, int quantidade) {
         ValidationResult result = this.validaVendaAcao(acaoUsuario, precoAtualizadoUnico, quantidade);
 
         if (result.isSucess()) {
@@ -96,12 +98,17 @@ public class CotacaoService {
                 Usuario usuario = dao.getEntityManager().merge(this.UsuarioLogado);
 
                 //Adiciona a acao para o usuario(Se ele já tiver uma ação identica, só adiciona à quantidade)
-                usuario.getPessoa().getConta().removeAcao(acaoUsuario, quantidade);
+                if (usuario.getPessoa().getConta().removeAcao(acaoUsuario, quantidade)) {
+                    dao.getEntityManager().find(Acao.class, acaoUsuario.getId());
+                    Acao acaoRemov = dao.getEntityManager().merge(acaoUsuario);
+                    dao.getEntityManager().remove(acaoRemov);
+                }
                 //Acrescenta o preço da ação ao crédito
-                usuario.getPessoa().getConta().addCredito(this.getPrecoComTaxas(precoAtualizadoUnico*quantidade, usuario, this.Configuracao));
+                usuario.getPessoa().getConta().addCredito(precoAtualizadoUnico * quantidade);
+                usuario.getPessoa().getConta().descontaCredito(this.getPrecoComTaxas(1, this.UsuarioLogado, this.Configuracao) - 1);
                 //Sobe o limite de corretagem.
                 usuario.getPessoa().getConta().addCorretagemTotalPaga(this.Configuracao.getTaxaCorretagem());
-                
+
                 dao.getEntityManager().refresh(usuario);
                 dao.getEntityManager().getTransaction().commit();
                 dao.close();
@@ -117,11 +124,11 @@ public class CotacaoService {
     public List<Acao> pesquisaCotacaoAcaoUnica(String termo) {
         return new AcaoJsonHelper().getAcoesFromJson("http://cotacao.davesmartins.com.br/webCotacao/?cod=" + termo);
     }
-    
+
     //Pesquisa a contacao passando uma lista convertida em termo
-    public List<Acao> pesquisaAcaoWithList(List<Acao> acoes){
+    public List<Acao> pesquisaAcaoWithList(List<Acao> acoes) {
         String termo = "";
-        for (Acao acao : acoes){
+        for (Acao acao : acoes) {
             termo += acao.getAcao() + ";";
         }
         return this.pesquisaCotacaoAcaoUnica(termo);
@@ -143,7 +150,6 @@ public class CotacaoService {
         return precoCotacao;
     }
 
-    
     //Getter Setter
     public UsuarioService getUsuarioService() {
         return UsuarioService;

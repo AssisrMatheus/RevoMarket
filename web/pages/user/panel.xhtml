@@ -41,7 +41,7 @@
                     </h:outputText>
                 </p>
                 <p>
-                    <b>Saldo Total(Crédito+Ações neste momento): </b>
+                    <b>Saldo Total(Crédito+Ações atualizadas): </b>
                     R$
                     <h:outputText value="#{panel.calculaSaldoTotal()}">
                         <f:convertNumber pattern="#.###" />
@@ -229,7 +229,7 @@
             <div>
                 <!--            Nenhuma Ação-->
                 <h:panelGroup rendered="#{systemMB.usuarioLogado.pessoa.conta.acoes.size() eq 0}"> 
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 3em;">
                         <h3>Você não possui nenhuma ação. Compre ações usando a busca acima</h3>
                     </div>
                 </h:panelGroup>
@@ -265,7 +265,7 @@
                                     </th>
 
                                     <th>
-                                        Preço pago
+                                        Preço pago(*Qtd.+Tax.)
                                     </th>
 
                                     <th>

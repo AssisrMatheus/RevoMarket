@@ -7,6 +7,7 @@ package Model.Cotacao;
 
 import Model.User.Pessoa;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -63,15 +64,34 @@ public class Conta {
             this.getAcoes().add(acaoToAdd);
     }
     
-    public void removeAcao(Acao acaoToAdd, int quantidade) {
+    public boolean removeAcao(Acao acaoToRemove, int quantidade) {
         //Para cada acao
-        this.getAcoes().removeIf(x -> x.getAcao().equals(acaoToAdd.getAcao()) &&
-                x.getAber_cotacao() == acaoToAdd.getAber_cotacao() &&
-                x.getMax_cotacao_dia() == acaoToAdd.getMax_cotacao_dia() &&
-                x.getMed_cotacao_dia() == acaoToAdd.getMed_cotacao_dia() &&
-                x.getMin_cotacao_dia() == acaoToAdd.getMin_cotacao_dia() &&
-                x.getUlt_cotacao() == acaoToAdd.getUlt_cotacao() &&
-                x.getVariacao() == acaoToAdd.getVariacao());
+        Iterator<Acao> itr = this.getAcoes().iterator();
+        while(itr.hasNext()){
+            Acao acaoRemov = itr.next();
+            if(acaoRemov.getAcao().equals(acaoToRemove.getAcao()) &&
+                    acaoRemov.getAber_cotacao() == acaoToRemove.getAber_cotacao() &&
+                    acaoRemov.getMax_cotacao_dia() == acaoToRemove.getMax_cotacao_dia() &&
+                    acaoRemov.getMed_cotacao_dia() == acaoToRemove.getMed_cotacao_dia() &&
+                    acaoRemov.getMin_cotacao_dia() == acaoToRemove.getMin_cotacao_dia() &&
+                    acaoRemov.getUlt_cotacao() == acaoToRemove.getUlt_cotacao() &&
+                    acaoRemov.getVariacao() == acaoToRemove.getVariacao())
+            {
+            
+                if((acaoToRemove.getQuantidade()-quantidade)<=0)
+                {
+                    itr.remove();
+                    return true;
+                }
+                else
+                {
+                    itr.next().setQuantidade(acaoRemov.getQuantidade()-quantidade);
+                    return true;
+                }
+                    
+            }
+        }
+        return false;
     }
     
     //Pega a quantidade de ações de um usuário.
